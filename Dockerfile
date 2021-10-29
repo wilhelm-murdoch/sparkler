@@ -19,11 +19,8 @@ RUN rm /etc/nginx/conf.d/default.conf
 ADD config/openresty/  /etc/nginx/
 ADD config/sysctl.conf /etc/sysctl.conf
 ADD config/limits.conf /etc/security/limits.conf
-ADD entrypoint.sh      /entrypoint.sh
 
 ARG GIT_SHA
 RUN echo "sparkler release: ${GIT_SHA}" > /.git_sha
 
 EXPOSE 8000
-
-ENTRYPOINT [ "/entrypoint.sh" ]

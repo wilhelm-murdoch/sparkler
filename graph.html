@@ -1,0 +1,51 @@
+<!--
+  1. calculate bounding box
+  2. get largest x value
+  3. get largest y value
+  4. for each point:
+    x = width / largest x * current x
+    y = height - ( height / largest y * current y)
+
+-->
+
+<svg width="300" height="60" id="svg">
+  <defs>
+    <linearGradient id="gradient" x1="0" x2="0" y1="1" y2="0">
+      <stop offset="0%" stop-color="#0e4429"></stop>
+      <stop offset="10%" stop-color="#006d32"></stop>
+      <stop offset="25%" stop-color="#26a641"></stop>
+      <stop offset="50%" stop-color="#39d353"></stop>
+    </linearGradient>
+    <mask id="sparkline" x="0" y="0" width="300" height="60">
+      <polyline id="polyline" transform="translate(0, 58) scale(1,-1)" points="" fill="transparent" stroke="#8cc665" stroke-width="2"></polyline>
+    </mask>
+  </defs>
+
+  <g transform="translate(0, 0)">
+    <rect x="0" y="-2" width="300" height="60" style="stroke: none; fill: url(#gradient); mask: url(#sparkline)"></rect>
+  </g>
+</svg>
+<script>
+  var data = []
+  for (var i = 0; i < 100; i++) {
+    data.push(Math.floor(Math.random() * 100) + 1)
+  }
+
+  h = 60
+  w = 300
+
+  my = Math.max(...data)
+  mx = data.length
+
+  var svg = document.getElementById('svg')
+  var polyline = document.getElementById('polyline')
+  var points = []
+  data.forEach(function (item, index) {
+    var px = w /  mx * index
+    var py = h - ( h / my * item)
+    var point = svg.createSVGPoint()
+    point.x = px
+    point.y = py
+    polyline.points.appendItem(point)
+  })
+</script>
