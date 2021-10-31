@@ -1,13 +1,39 @@
-local pprint = require('pprint')
+Chart = {
+  size   = "s",
+  height = 0,
+  width  = 0,
+  series = {}
+}
 
-local string = "1,2,3,4,5"
+function Chart:new(size, series, height, width)
+  series = series or {}
+  size   = size or "xs"
 
-points = {}
-for p in string.gmatch(string, '[^,]+') do
-  p = tonumber(p)
-  if p ~= nil or p <= 0 then
-    table.insert(points, p)
-  end   
+  local sizes = {
+    ["xs"] = {["h"] = 0, ["w"] = 0},
+    ["s"]  = {["h"] = 0, ["w"] = 0},
+    ["m"]  = {["h"] = 0, ["w"] = 0},
+    ["l"]  = {["h"] = 0, ["w"] = 0},
+    ["xl"] = {["h"] = 0, ["w"] = 0}
+  }
+
+  if height ~= nil and width ~= nil then
+    height = height
+    width  = width
+  else
+
+  end
+
+  print(sizes["m"]["h"])
 end
 
-pprint(points)
+Chart:new("s")
+
+-- local pprint = require('pprint')
+
+-- digits = {}
+-- for p in string.gmatch("this is 1 string with 2, no, 3 digits!", '%d+') do
+--   table.insert(digits, p)
+-- end
+
+-- pprint(digits)

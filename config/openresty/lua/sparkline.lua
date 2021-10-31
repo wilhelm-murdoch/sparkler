@@ -3,26 +3,18 @@ local width = 155
 local height = 30
 
 if next(args) == nil then
-  -- no arguments
-  ngx.exit(ngx.HTTP_BAD_REQUEST)
-end
-
-if args["points"] == nil or string.len(args["points"]) == 0 then
-  -- points are empty
   ngx.exit(ngx.HTTP_BAD_REQUEST)
 end
 
 points = {}
-for p in string.gmatch(args["points"], '[^,]+') do
-  p = tonumber(p)
-  if p ~= nil or p <= 0 then
-    table.insert(points, p)
-  end   
+for p in string.gmatch(args["points"], '%d+') do
+  table.insert(points, p)
 end
-ngx.exit(ngx.OK)
+
 points_count = table.getn(points)
 if not (points_count >= 2 and points_count <= 100) then
-  -- too few or too many data points
+  ngx.req.set_header("Content-Type", "application/json")
+  ngx.say("{ \"code\": 400, \"message\": \"you may only specify between 2 and 100 data points.\"}")
   ngx.exit(ngx.HTTP_BAD_REQUEST)
 end
 
