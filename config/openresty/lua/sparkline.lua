@@ -7,14 +7,14 @@ if next(args) == nil then
 end
 
 points = {}
-for p in string.gmatch(args["points"], '%d+') do
+for p in string.gmatch(args['points'], '%d+') do
   table.insert(points, p)
 end
 
 points_count = table.getn(points)
 if not (points_count >= 2 and points_count <= 100) then
-  ngx.req.set_header("Content-Type", "application/json")
-  ngx.say("{ \"code\": 400, \"message\": \"you may only specify between 2 and 100 data points.\"}")
+  ngx.req.set_header('Content-Type', 'application/json')
+  ngx.say('{"code": 400, "message": "You may only specify between 2 and 100 data points."}')
   ngx.exit(ngx.HTTP_BAD_REQUEST)
 end
 
@@ -24,9 +24,9 @@ local max_y = math.max(unpack(points))
 local coordinates = {}
 for index, value in pairs(points) do
   local x = width /  max_x * index
-  local y = height - ( height / max_y * value)
+  local y = height - (height / max_y * value)
 
-  table.insert(coordinates, x .. "," .. y)
+  table.insert(coordinates, string.format('%d,%d', x, y))
 end
 
 local sparkline = [[
@@ -39,7 +39,7 @@ local sparkline = [[
       <stop offset="50%" stop-color="#39d353"></stop>
     </linearGradient>
     <mask id="sparkline" width="]] .. width .. [[" height="]] .. height .. [[">
-      <polyline points="]] .. table.concat(coordinates, " ") .. [[" fill="transparent" stroke="#8cc665" stroke-width="2"></polyline>
+      <polyline points="]] .. table.concat(coordinates, ' ') .. [[" fill="transparent" stroke="#8cc665" stroke-width="2"></polyline>
     </mask>
   </defs>
 

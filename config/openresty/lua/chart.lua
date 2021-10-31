@@ -21,7 +21,11 @@ function Chart:new(size, series, height, width)
     height = height
     width  = width
   else
-
+    
+    -- is size in table
+      -- if not, throw error
+    -- grab size value
+    -- set height + width
   end
 
   print(sizes["m"]["h"])
